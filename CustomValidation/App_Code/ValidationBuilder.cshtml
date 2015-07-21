@@ -1,0 +1,27 @@
+﻿@using CustomValidation.Models
+@using Validator = CustomValidation.Models.Validator
+
+@helper ShowValidationMessages(Validator validationMessage)
+{
+if (validationMessage != null)
+{
+        <script>
+      $(document).ready(function () {
+        toastr.options.closeButton = '@validationMessage.ShowCloseButton';
+        toastr.options.newestOnTop = '@validationMessage.ShowNewestOnTop';
+
+        @foreach (ValidationMessage message in validationMessage.ValidationMessages)
+        {
+          string messageTypeValue = message.MessageType.ToString("F").ToLower();
+          @: var optionsOverride = { /* Add message specific options here */ };
+          if (message.IsSticky)
+          {
+            @:optionsOverride.timeOut = 0;
+            @:optionsOverride.extendedTimeout = 0;
+          }
+          @:toastr['@messageTypeValue']('@message.Message', '@message.Title', optionsOverride);
+        }
+      });
+        </script>
+}
+}

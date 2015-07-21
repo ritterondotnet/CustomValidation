@@ -1,0 +1,7 @@
+﻿@using Validator = CustomValidation.Models.Validator
+
+@if (TempData.ContainsKey("Validator"))
+{
+    Validator validationMessage = TempData["Validator"] as Validator;
+    @ValidationBuilder.ShowValidationMessages(validationMessage);
+}
